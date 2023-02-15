@@ -1,0 +1,288 @@
+.\" doc/mdoc/ja/escj.sh.in.1 - manual template
+.\" escj.sh.1 - japanese manual
+.\"
+.\" Copyright (C) 2023 Tpaefawzen
+.\"
+.\" Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+.\"
+.\" THE SOFTWARE IS PROVIDED “AS IS” AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\"
+.Dd @MDOCDATE@
+.Dt ESCJ.SH 1
+.Os POSIX原理主義
+.
+.Sh 名称
+.Nm escj.sh
+.Nd JSONPath-value形式のUTF-8文字列データをJSONエスケープ
+.
+.Sh 書式
+.Nm escj.sh
+.Op Fl j | p | q
+.Op Ar JSONPath-value_file
+.Pp
+.Nm escj.sh
+.Fl n
+.Op Ar file
+.
+.Sh 解説
+.Pp
+.Nm
+は、
+.Xr JSONPath-value 5
+形式のデータテキストあるいはUTF-8テキストを受け取り、
+UTF-8で書かれた文字列をJSONエスケープするプログラムです。
+.Pp
+このプログラムはJSON形式のデータを生成する場合において、
+生のUTF-8を含むJSONを受けつけることができない
+JSONパーザ向けに送信するJSONデータを生成するのに便利です。
+.Pp
+1つ目の
+.Sx 書式
+では、ファイル
+.Ar JSONPath-value_file
+の各行について次の手順を行います。
+.Bl -enum -width Ds
+.ta 0
+.	It
+	1文字以上の空白文字あるいは1文字以上のタブ文字もしくは
+	1文字以上の両方で区切られたJSONPath-value形式のデータと
+	みなします。
+	ただし、
+.	Em value
+	については、与えられたフラグによりにその値の両端に引用符
+.	Sq \(dq
+	がある場合の取り扱いが変わります。
+.	It
+.	Em value
+	行の各文字について、JSONエンコードが必要な文字は
+	JSONエンコードして置換します。不要な文字はそのままに
+	します。得られた文字列を
+.	Em encodedValue
+	とします。
+.	Em JSONPath
+	は変更されません。
+.	It
+	1文字の空白区切りでJSONPath-encodedValue形式の行データを
+	出力します。
+.ta
+.El
+.Pp
+2つ目の
+.Sx 書式
+では、ファイル
+.Ar file
+の各文字をJSONエンコードし、得られた文字列を
+1行の文字列として出力します。
+.
+.Sh フラグ
+以下のフラグは、
+.Nm
+の動作モードを指定します。
+.Bl -tag -width Ds
+.ta 0
+.It Fl j
+	入力を
+.	Xr JSONPath-value 5
+	形式データとみなします。この動作モードでは、全ての
+.	Em value
+	が引用符
+.	Sq \(dq
+	で囲まれていないものと仮定します。そのため、引用符で
+	囲まれている場合は引用符も値であるものとみなします。
+.It Fl n
+.	Fl j
+	と同じ意味です。
+.It Fl p
+	入力をUTF-8文字列データとみなします。
+.It Fl q
+	入力を
+.	Xr JSONPath-value 5
+	形式データとみなします。この動作モードでは、
+.	Em value
+	が引用符
+.	Sq \(dq
+	で囲まれていればその引用符はデータの一部ではないものと
+	みなし、JSONエンコードせずに保持します。
+.ta
+.El
+.Pp
+フラグが与えられなかった場合は、
+.Fl j
+のみが与えられたものとみなします。
+.
+.Sh 引数
+以下の引数がサポートされます。ただし、どちらの引数についても、
+引数が使用されていないか、もしくは
+.Sq -
+が指定されている場合は、標準入力が使用されます。
+.Bl -tag -width Ds
+.ta 0
+.It Ar JSONPath-value
+	UTF-8で記述されている可能性のある文字列データを
+	JSONエスケープをする対象となるファイルのパスです。
+	ファイルの内容は、
+.	Xr JSONPath-value 5
+	形式であるとみなされます。
+	それ以外の形式は、動作保証対象外です。
+.It Ar file
+	JSONエスケープをする対象となるファイルのパスです。
+	文字エンコードがUTF-8であれば内容の形式は任意です。
+.ta
+.El
+.
+.Sh 標準入力
+.Ar JSONPath-value
+もしくは
+.Ar file
+が使用されていないか、もしくは
+.Sq -
+が指定されている場合にのみ使用されます。
+.
+.Sh 入力ファイル
+レギュラーファイル、キャラクタデバイス、名前付きパイプのいずれかであり、かつ
+読み取り可能なファイルである必要があります。内容は
+.Sx 引数
+で記述されている内容の他、UTF-8でエンコードされている必要があります。
+.Sx 引数
+に従っていない内容だったり、あるいは異なる文字エンコードが
+使用されているか、あるいはその両方である場合は
+動作保証の対象外です。
+.
+.Sh 環境変数
+以下の環境変数が使用され、このプログラムの動作に影響します。
+.Bl -tag -width Ds
+.ta 0
+.It LINE_BUFFERED
+	ラインバッファモードが利用可能である場合において値が
+.	Dq yes
+	もしくは
+.	Dq force
+	の場合であればラインバッファモードを利用します。
+	ラインバッファモードが利用不能である場合において値が
+.	Dq force
+	の場合、ラインバッファモードが有効でなければエラー終了します。
+.ta
+.El
+.
+.Sh 標準出力
+フラグ
+.Fl p
+が有効の場合は、改行で終端された1行の文字列が出力されます。
+これは入力ファイルの内容をJSONエスケープしたものを表します。
+.Pp
+フラグ
+.Fl j
+もしくは
+.Fl q
+が有効の場合は、各
+.Em JSONPath-escapedValue
+データ行について、次の書式で出力されます。
+.Bd -filled -offset Ds
+.Dq "%s %s%s%s\en"
+,
+.Em JSONPath
+,
+.Em dq
+,
+.Em escapedValue
+,
+.Em dq
+.Ed
+ただし、
+.Em dq
+は、もとの
+.Em value
+が引用符
+.Sq \(dq
+で囲まれていて、かつフラグ
+.Fl q
+が有効の場合にのみ引用符
+.Sq \(dq
+1文字となります。
+それ以外の場合は空文字列となります。
+.
+.Sh 標準エラー出力
+使用方法に誤りがある、ファイルが開けないなどの診断の為にのみ使われます。
+.
+.Sh 出力ファイル
+ありません。
+.
+.Sh 詳細解説
+ありません。
+.
+.Sh 終了コード
+以下の終了コードが使われます。
+.Bl -tag -width Ds
+.ta 0
+.It 0
+	入力ファイルが正常に開ける形式です。
+.It >0
+	使用可能でない
+.	Sx フラグ
+	あるいは本コマンドで開けない形式の
+.	Sx 入力ファイル
+	が与えられたなどが考えられます。
+.ta
+.El
+.
+.Sh 規格
+.Nm escj.sh
+は、
+.Em RFC4627
+に準拠したJSON形式のデータを取り扱うものとされています。
+.
+.Sh 関連項目
+.Nm escj.sh
+は
+.Xr Parsrs 1
+の一部です。
+.Pp
+.Xr JSONPath-value 5 ,
+.Xr makrj.sh 1 ,
+.Xr parsrj.sh 1 ,
+.Xr unescj.sh 1
+.Pp
+.Rs
+.%A D. Crockford
+.%B  The application/json Media Type for JavaScript Object Notation (JSON)
+.%D 2006
+.%U https://www.rfc-editor.org/rfc/rfc4627
+.Re
+.
+.Sh 歴史
+.Nm
+は、2022年2月4日を初版として登場しました。
+.
+.Sh 作者
+.Nm
+は
+.Xr Parsrs 1
+の一部です。
+.Xr Parsrs 1
+は
+.An "秘密結社シェルショッカー 日本支部"
+により開発、公開されています。
+.
+.Sh 注意事項
+.Nm
+は、オプションあるいはフラグの終わりを示し、それ以降のコマンドライン
+引数を引数であるものと示すフラグ
+.Dq \-\-
+を認識しません。また、2022年2月4日版では、認識できないフラグは
+全て使用方法を表示するフラグであるように認識します。
+.
+.Sh ライセンス
+.Xr Parsrs 1
+は、
+.Dq LICENSE
+ファイル上では
+.Dq The Unlicense
+でライセンスされているものとされていますが、
+.Nm
+のソースコード上ではパブリックドメイン
+.Pq CC0
+でライセンスされています。
+どちらが本当に採用されているのかは神のみぞ知ります。
+.
+.Sh このマニュアルについて
+.Ss 作者

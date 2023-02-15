@@ -1,0 +1,25 @@
+==> convx2j.sh <==
+==> escj.sh <==
+==> makrc.sh <==
+../../../makrc.sh:# === Print the usage when "--help" is put ===========================
+../../../makrc.sh:  '1 -h'|'1 --help'|'1 --version') print_usage_and_exit;;
+==> makrj.sh <==
+../../../makrj.sh:# === Print the usage when "--help" is put ===========================
+../../../makrj.sh:  '1 -h'|'1 --help'|'1 --version') print_usage_and_exit;;
+==> makrx.sh <==
+../../../makrx.sh:# === Print the usage when "--help" is put ===========================
+../../../makrx.sh:  '1 -h'|'1 --help'|'1 --version') print_usage_and_exit;;
+==> parsrc.sh <==
+../../../parsrc.sh:# === Print the usage when "--help" is put ===========================
+../../../parsrc.sh:  '1 -h'|'1 --help'|'1 --version') print_usage_and_exit;;
+==> parsrj.sh <==
+../../../parsrj.sh:# === Print the usage when "--help" is put ===========================
+../../../parsrj.sh:  '1 -h'|'1 --help'|'1 --version') print_usage_and_exit;;
+==> parsrt.sh <==
+../../../parsrt.sh:# === Print the usage when "--help" is put ===========================
+../../../parsrt.sh:  '1 -h'|'1 --help'|'1 --version') print_usage_and_exit;;
+==> parsrx.sh <==
+../../../parsrx.sh:# === Print the usage when "--help" is put ===========================
+../../../parsrx.sh:  '1 -h'|'1 --help'|'1 --version') print_usage_and_exit;;
+==> unescj.sh <==
+==> xpathread.sh <==

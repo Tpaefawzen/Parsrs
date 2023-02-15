@@ -1,0 +1,103 @@
+==> convx2j.sh <==
+# === Usage ===
+# Usage: convx2j.sh [XPath-value_textfile]
+#
+==> escj.sh <==
+# === Usage ===
+# Usage   : escj.sh -p [textfile]
+#           escj.sh [-j|-n|-q] [JSONPath-value_file]
+# Options : -p ... Expect plain UTF-8 text.
+#           -j ... Expect JSONPath-value file, whose every string value
+#                  is not enclosed in double quotes.
+#                  (default)
+#           -n ... Equivalent to -j option.
+#           -q ... Expect JSONPath-value file. Preserve presence of
+#                  double quotes for string values.
+# Environs: LINE_BUFFERED
+#             =yes ........ Line-buffered mode if available
+#             =forcible ... Force line-buffered mode. Exit if unavailable.
+#
+==> makrc.sh <==
+# === Usage ===
+# Usage   : makrc.sh [options] [Line#-Field#-value_textfile]
+# Options : -fs<s> Specify the CSV field separator (default: ",")
+#           -lf    Represent end of line with LFs rather than CR+LFs
+#           -t     Don't quote values with '"' nor escape fields
+# Environs: LINE_BUFFERED
+#             =yes ........ Line-buffered mode if possible
+#             =forcible ... Force line-buffered mode. Exit if unavailable.
+# Caution : Requires line# and field# to be sorted, i.e.
+#           use preprocessor "sort -k 1n,1 -k 2n,2"
+#
+==> makrj.sh <==
+# === Usage ===
+# Usage   : makrj.sh [JSON-value_textfile]
+# Environs: LINE_BUFFERED
+#             =yes ........ Line-buffered mode if possible
+#             =forcible ... Force line-buffered mode. Exit if unavailable.
+#
+==> makrx.sh <==
+# === Usage ===
+# Usage : makrx.sh [XPath-value_textfile]
+#
+==> parsrc.sh <==
+# === Usage ===
+# Usage   : parsrc.sh [-lf<s>] [CSV_file]
+# Options : -lf Represent newline in value as <s> rather than "\n".
+#               This option disables replacing \ with \\.
+# Environs: LINE_BUFFERED
+#             =yes ........ Line-buffered mode if possible
+#             =forcible ... Force line-buffered mode. Exit if unavailable.
+#
+==> parsrj.sh <==
+# === Usage ===
+# Usage   : parsrj.sh [options] [JSON_file]
+# Options : -t      Quote string values explicitly
+#         : -e      Escape the following characters in impolite JSON key fields
+#                   (" ",<0x09>,".","[","]")
+#         : --xpath Output in XPath format rather JSONPath
+#                   It is equivalent to specifying the following option:
+#                   (-rt -kd/ -lp'[' -ls']' -fn1 -li)
+#          <<The following options arrange the JSONPath format>>
+#           -sk<s>  Replace <0x20> chrs in key string with <s>
+#           -rt<s>  Replace the root symbol "$" of JSONPath with <s>
+#           -kd<s>  Replace the delimiter "." of JSONPath hierarchy with <s>
+#           -lp<s>  Replace the prefix of array character "[" with <s>
+#           -ls<s>  Replace the suffix of array character "]" with <s>
+#           -fn<n>  Redefine the start number of arrays with <n>
+#           -li     Insert another JSONPath line which has no value
+# Environs: LINE_BUFFERED
+#             =yes ........ Line-buffered mode if possible
+#             =forcible ... Force line-buffered mode. Exit if unavailable.
+#
+==> parsrt.sh <==
+# === Usage ===
+# Usage   : parsrt.sh [options] [TSV_file]
+# Options : -dq Interpret '"' as the same meaning as RFC 4180 CSV
+#           -lf Replace the newline sign "\n" with <s>.
+#               This option disables replacing \ with \\.
+#               This option implies "-dq" option.
+# Environs: LINE_BUFFERED
+#             =yes ........ Line-buffered mode if possible
+#             =forcible ... Force line-buffered mode. Exit if unavailable.
+#
+==> parsrx.sh <==
+# === Usage ===
+# Usage   : parsrx.sh [options] [XML_file]
+# Options : -c  Print the child tags in value explicitly
+#         : -n  Print the array subscript number after the tag name
+#         : -lf Replace the newline sign "\n" with <s>.
+#               This mode disables replacing \ with \\.
+# Environs: LINE_BUFFERED
+#             =yes ........ Line-buffered mode if possible
+#             =forcible ... Force line-buffered mode. Exit if unavailable.
+#
+==> unescj.sh <==
+# === Usage ===
+# Usage   : unescj.sh [-nuU] [JSONPath-value_textfile]
+# Options : -n ... Expect input format is JSONPath-value
+# Environs: LINE_BUFFERED
+#             =yes ........ Line-buffered mode if possible
+#             =forcible ... Force line-buffered mode. Exit if unavailable.
+#
+==> xpathread.sh <==
