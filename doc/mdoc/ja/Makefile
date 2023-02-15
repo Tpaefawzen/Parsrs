@@ -45,4 +45,4 @@ _unimplemented:
 
 .SUFFIXES: .in.1 .1
 .in.1.1:
-	sh ./eliminate-atmarks.sh <$< >$@
+	cp $< $@
