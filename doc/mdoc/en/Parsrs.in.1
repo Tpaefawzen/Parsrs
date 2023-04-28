@@ -1,0 +1,272 @@
+.\" doc/mdoc/en/Parsrs.in.1 - manual template
+.\" Parsrs.1 - english manual
+.\"
+.\" Copyright (C) 2023 Tpaefawzen
+.\"
+.\" Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+.\"
+.\" THE SOFTWARE IS PROVIDED “AS IS” AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\"
+.Dd February 18, 2023
+.Dt PARSRS 1
+.Os POSIXism
+.
+.Sh NAME
+.Nm Parsrs
+.Nd CSV/JSON/XML parsers and generators
+.
+.Sh DESCRIPTION
+.Nm
+is a collection of POSIX fundamentalism-compliant shell scripts
+who handle three types of data formats: CSV, JSON, and XML.
+.Sh UTILITIES
+The following utilities are included as on
+2022-11-26 13:49:59 JST
+:
+.\" how generate?
+.\" for x in ../../../*.sh; do echo ${x##*/}; done | LC_ALL=C sort
+.Xr convx2j.sh 1 ,
+.Xr escj.sh 1 ,
+.Xr makrc.sh 1 ,
+.Xr makrj.sh 1 ,
+.Xr makrx.sh 1 ,
+.Xr parsrc.sh 1 ,
+.Xr parsrj.sh 1 ,
+.Xr parsrt.sh 1 ,
+.Xr parsrx.sh 1 ,
+.Xr unescj.sh 1 , and
+.Xr xpathread.sh 1 .
+.\" .Pp
+.\" .Nm Parsrs
+.\" の各ユーティリティは、
+.\" CSV関連のもの、JSON関連のもの、XML関連のものにそれぞれ、
+.\" .Sq c
+.\" .Sq j
+.\" .Sq x
+.\" の文字を接辞としてユーティリティ名に含んでいます。
+.\" .Xr parsrt.sh 1
+.\" は例外的に
+.\" .Sq t
+.\" を接辞として名前に含んでいます。
+.
+.Ss SYNOPSIS
+Each utility accepts
+.Sx OPTIONS
+and/or flags (if any) first, then
+.Sx OPERANDS
+next.
+.
+.Ss OPTIONS
+Some utilities accept flags
+.Dq Fl h ,
+.Dq Fl \-help , and
+.Dq Fl \-usage
+to display each of their usage to exit with non-zero exit status.
+.Pp
+No utilities of
+.Nm Parsrs
+recognize
+.Dq Fl \- ,
+to indicate end of options/flags.
+.
+.Ss OPERANDS
+Each utility accepts its operands as path to input file.
+If none is given or
+.Dq \-
+is given, the utility accepts standard input as its input file.
+.
+.Ss STANDARD INPUT
+Refer
+.Sx OPERANDS .
+.
+.Ss INPUT FILES
+The input files must be one of regular file, character device, or
+named pipe, and must be readable, because they are read by
+.Xr cat 1 ,
+.Xr grep 1 , and
+.Xr awk 1 .
+The files shall be assumed to be encoded in UTF\-8.
+.
+.Ss ENVIRONMENTS
+Most utilities use the following environment variable(s) for
+line-buffer mode.
+.Bl -tag -width Ds
+.It LINE_BUFFERED
+Use line-buffer mode if the mode is available and the value is
+.Dq yes
+or
+.Dq force .
+If the value is
+.Dq force
+and line-buffer mode is unavailable, the program aborts.
+.El
+.
+.Ss STANDARD OUTPUT
+The standard output indicates the result of convertion.
+.Ss STANDARD ERROR
+The standard error is used for diagonistics and displaying utilities' usage.
+.Ss OUTPUT FILES
+To save the result, redirect program's output to a file.
+.Ss EXTENDED DESCRIPTION
+Some utilities use
+.Sx INTERMEDIATE REPRESENTATIONS
+for its input and output format, as described in the section.
+.
+.Ss EXIT STATUS
+Most utilities use the following exit status.
+.Bl -tag -width Ds
+.It 0
+Successfully finished.
+.It >0
+An error occured, including, but not limited to:
+(1) incorrect usage,
+(2) the input file format is rejected,
+(3) syntax error found,
+(4) invoked an option such as
+.Fl -help .
+to show the usage.
+.El
+.
+.Sh INTERMEDIATE REPRESENTATIONS
+The
+.Nm Parsrs
+utilities use
+.Xr CSVIndex\-value 5 (
+previously
+.Xr LineNo\-FieldNo\-value 5 ,
+actual name is
+.Xr "Line#\-Field#\-value" 5 ),
+.Xr JSONPath\-value 5 , and
+.Xr XPath\-value 5
+for intermediate representations, which is derivered from
+.Xr key\-value 5 ,
+line-oriented blank-oriented data format.
+.
+.Sh STANDARDS
+The utilities for this project is to be referring the following standards:
+.Bl -bullet
+.It
+.Rs
+.%A Y. Shafranovich
+.%T Common Format and MIME Type for Comma-Separated Values (CSV) Files
+.%N RFC 4180
+.%N DOI 10.17487/RFC4180
+.%D October XX, 2005
+.%U https://www.rfc-editor.org/info/rfc4180
+.Re
+.
+.It
+.Rs
+.%A D. Crockford
+.%T The application/json Media Type for JavaScript Object Notation (JSON)
+.%N RFC 4627
+.%N DOI 10.17487/RFC4627
+.%D July XX, 2006
+.%U https://www.rfc-editor.org/info/rfc4627
+.Re
+.
+.It
+.Rs
+.%A Stefan Gössner
+.%T JSONPath - XPath for JSON
+.%O First post was on February 2, 2007
+.%O Licensed under Creative Commons - Attribution 2.5 Generic (CC BY 2.5)
+.%D August 31, 2007
+.%U https://goessner.net/articles/JsonPath/
+.Re
+.
+.It
+.Rs
+.%T XPATH COVER PAGE
+.%I World Wide Web Consortium
+.%O it is unclear that which version of \(dqXML Path Language(XPath)\(dq is referred
+.%U https://www.w3.org/TR/xpath/
+.Re
+.El
+.
+.
+.Sh HISTORY
+The
+.Nm Parsrs
+began with four utilities:
+.Xr parsrc.sh 1 ,
+.Xr parsrj.sh 1 ,
+.Xr unescj.sh 1 , and
+.Xr parsrx.sh 1
+in that order since 2012-08-04.
+They are renamed into as on today in 2013-05-09.
+.Pp
+The
+.Xr xpathread.sh 1
+appeared since 2013-05-12.
+.Pp
+The
+.Xr makrc.sh 1
+appeared since 2015-01-20.
+Since that release, each utility are declared to be licensed under public domain
+as in each source file.
+.Pp
+The
+.Xr parsrt.sh 1
+appeared since 2015-01-25.
+.Pp
+The
+.Xr makrj.sh 1
+appeared since 2016-09-14.
+Since then, the utilities are clearly licensed under the
+.Dq CC0
+license.
+.Pp
+The sources are commented in English since 2017-01-30.
+Since the date, last edited time (who indicates version)
+is ISO 8601-compatible.
+.Pp
+The
+.Xr convx2j.sh 1
+appeared since 2017-02-21.
+.Pp
+The
+.Xr makrx.sh 1
+appeared since 2017-02-25.
+.Pp
+The LICENSE file appeared since 2017-07-05; it describes the states of
+the Unlicense License.
+.Pp
+The plain-text Japanese manual files appeared since 2020-05-06.
+.Pp
+The
+.Xr escj.sh 1
+appeared since 2022-02-07. Since then, each utility accepts
+line-buffer mode.
+.
+.Sh AUTHOR
+.Nm Parsrs
+is developed and published by
+.An ShellShoccar-jpn ;
+the GitHub repository is available at:
+.Lk https://github.com/ShellShoccar\-jpn/Parsrs
+.
+.Sh LICENSE
+.Nm Parsrs
+is to be licensed under
+.Dq The Unlicense
+on the
+.Dq LICENSE
+file, but each utility's source code is licensed under the
+.Pq CC0 .
+.
+.Sh ABOUT THIS MANUAL
+.Ss AUTHOER
+This manual was written by
+.An Tpaefawzen ,
+aside from original software author. The manual can be obtained from a GitHub repository
+.Lk https://github.com/Tpaefawzen/Parsrs .
+.Ss COPYRIGHT NOTICE AND LICENSE OF THIS MANUAL
+Copyright
+\(co
+2023
+.An Tpaefawzen
+.Pp
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+.Pp
+THE SOFTWARE IS PROVIDED “AS IS” AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
