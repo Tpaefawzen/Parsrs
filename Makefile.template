@@ -1,0 +1,17 @@
+################################################################################
+#
+# Makefile - for Parsrs
+#
+################################################################################
+
+.POSIX:
+
+TARGET = @TARGET@
+
+all:
+	chmod a+x $(TARGET)
+
+install:
+	@if [ -z $(PREFIX) ]; then echo Usage: make PREFIX=path install 1>&2; exit 1; fi
+	mkdir -p $(PREFIX)/bin
+	cp $(TARGET) $(PREFIX)/bin
