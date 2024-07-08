@@ -39,7 +39,7 @@
 #
 #
 #
-# Written by Shell-Shoccar Japan (@shellshoccarjpn) on 2022-02-06
+# Written by Shell-Shoccar Japan (@shellshoccarjpn) on 2024-01-11
 #
 # This is a public-domain software (CC0). It means that all of the
 # people can use this for any purposes with no restrictions at all.
@@ -75,7 +75,7 @@ print_usage_and_exit() {
 	Environs: LINE_BUFFERED
 	            =yes ........ Line-buffered mode if possible
 	            =forcible ... Force line-buffered mode. Exit if unavailable.
-	Version : 2022-02-06 12:45:01 JST
+	Version : 2024-01-11 13:02:00 JST
 	          (POSIX Bourne Shell/POSIX commands)
 	USAGE
   exit 1
@@ -288,7 +288,7 @@ awk '                                                                          #
           print LF, line;'"$awkfl"'                                            #
         } else {                                                               #
           # 1-2. when the pointer does not reaches a tag yet                   #
-          print substr(line,2);                                                #
+          print substr(line,1);                                                #
         }                                                                      #
       } else if (in_quot == 0) {                                               #
         # 2. when the pointer is in a tag, but out of quotations               #
